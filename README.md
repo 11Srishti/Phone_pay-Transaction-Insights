@@ -19,7 +19,6 @@ The PhonePe Transaction Analysis project focuses on understanding digital paymen
 - **Python** – Data extraction and processing
 - **Pandas/JSON** – Data transformation
 - **SQL (MySQL)** – Database handling
-- **Streamlit** – Web app for visualization
 - **Git & GitHub** – Version control
 
 ##  Project Structure
@@ -33,7 +32,7 @@ The PhonePe Transaction Analysis project focuses on understanding digital paymen
 ### Prerequisites
 - Python 3.8+
 - MySQL or PostgreSQL
-- 
+
 
 
 
