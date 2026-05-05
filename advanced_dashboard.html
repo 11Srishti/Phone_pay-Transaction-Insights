@@ -1,0 +1,115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Financial Ecosystem Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+        .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; max-width: 1200px; margin: auto; }
+        .card { background: #1e293b; border-radius: 12px; padding: 20px; border: 1px solid #334155; }
+        h1 { text-align: center; color: #38bdf8; margin-bottom: 40px; font-weight: 300; }
+        h2 { font-size: 1.1rem; margin-bottom: 20px; color: #94a3b8; border-left: 4px solid #38bdf8; padding-left: 10px; }
+        .full-width { grid-column: span 2; }
+        canvas { width: 100% !important; height: 300px !important; }
+    </style>
+</head>
+<body>
+    <h1>Financial Intelligence Operations Center</h1>
+    
+    <div class="grid">
+        <div class="card">
+            <h2>Average Transaction Value by Type</h2>
+            <canvas id="avgTransChart"></canvas>
+        </div>
+        
+        <div class="card">
+            <h2>Insurance Penetration by State (Top 10)</h2>
+            <canvas id="insStateChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>User Device Distribution (Brand Share)</h2>
+            <canvas id="brandChart"></canvas>
+        </div>
+
+        <div class="card">
+            <h2>Top 10 Active Pincodes (Transaction Volume)</h2>
+            <canvas id="pincodeChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        const d = {"trans_types": ["Financial Services", "Merchant payments", "Others", "Peer-to-peer payments", "Recharge & bill payments"], "trans_avg_values": [920.9502667203842, 501.6930392985455, 665.0659681138683, 3134.4195005802426, 680.6616171829917], "state_ins_labels": ["karnataka", "maharashtra", "tamil-nadu", "uttar-pradesh", "telangana", "west-bengal", "kerala", "andhra-pradesh", "delhi", "rajasthan"], "state_ins_values": [1957404, 1815539, 1215269, 1139153, 894342, 839715, 824235, 697769, 652514, 639684], "brand_labels": ["Xiaomi", "Samsung", "Vivo", "Oppo", "Others", "Realme", "Apple", "Motorola"], "brand_values": [869562617, 671603711, 625415019, 420250245, 282950234, 219973222, 95947314, 73340734], "pincode_labels": ["500034", "560001", "500001", "110006", "411004", "800001", "302016", "411033", "500072", "302012"], "pincode_values": [1799788151, 1508570673, 1473824185, 1266159989, 1241540550, 870697632, 856458451, 788668495, 771328390, 769552923]};
+        
+        const chartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { labels: { color: '#94a3b8' } } },
+            scales: { 
+                y: { grid: { color: '#334155' }, ticks: { color: '#94a3b8' } },
+                x: { grid: { display: false }, ticks: { color: '#94a3b8' } }
+            }
+        };
+
+        // Avg Transaction Value
+        new Chart(document.getElementById('avgTransChart'), {
+            type: 'bar',
+            data: {
+                labels: d.trans_types,
+                datasets: [{
+                    label: 'Avg Value (INR)',
+                    data: d.trans_avg_values,
+                    backgroundColor: '#38bdf8'
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Insurance by State
+        new Chart(document.getElementById('insStateChart'), {
+            type: 'line',
+            data: {
+                labels: d.state_ins_labels,
+                datasets: [{
+                    label: 'Policies Issued',
+                    data: d.state_ins_values,
+                    borderColor: '#fbbf24',
+                    backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: chartOptions
+        });
+
+        // Brand Pie
+        new Chart(document.getElementById('brandChart'), {
+            type: 'doughnut',
+            data: {
+                labels: d.brand_labels,
+                datasets: [{
+                    data: d.brand_values,
+                    backgroundColor: ['#f472b6', '#818cf8', '#34d399', '#fb7185', '#a78bfa', '#22d3ee', '#fb923c', '#94a3b8']
+                }]
+            },
+            options: { ...chartOptions, scales: {} } // No scales for doughnut
+        });
+
+        // Pincode Volume
+        new Chart(document.getElementById('pincodeChart'), {
+            type: 'bar',
+            data: {
+                labels: d.pincode_labels,
+                datasets: [{
+                    label: 'Total Transactions',
+                    data: d.pincode_values,
+                    backgroundColor: '#818cf8'
+                }]
+            },
+            options: { ...chartOptions, indexAxis: 'y' }
+        });
+    </script>
+</body>
+</html>
